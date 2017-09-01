@@ -7,6 +7,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.chartistjsf.component.chart.Chart;
+import org.chartistjsf.model.chart.ChartSeriesData;
 import org.chartistjsf.model.chart.PieChartModel;
 import org.primefaces.util.ComponentUtils;
 
@@ -37,13 +38,22 @@ public class PieRenderer extends BaseChartistRenderer {
 		}
 
 		writer.write(" series:[");
-		for (Iterator<Number> numbersIter = model.getData().iterator(); numbersIter.hasNext();) {
-			Number number = numbersIter.next();
-			String numberAsString = (number != null) ? number.toString() : "null";
+		for (Iterator<ChartSeriesData> seriesDataIter = model.getData().iterator(); seriesDataIter.hasNext();) {
+		    	ChartSeriesData data = seriesDataIter.next();
+		    	
+		    	writer.write("{");
+		    	
+		    	String metaAsString = (data.getMeta() != null) ? data.getMeta() : "";
+			String numberAsString = (data.getValue() != null) ? data.getValue().toString() : "null";
 
+			writer.write("meta: '");
+			writer.write(metaAsString);
+			writer.write("', value: ");
 			writer.write(numberAsString);
+			
+			writer.write("}");
 
-			if (numbersIter.hasNext()) {
+			if (seriesDataIter.hasNext()) {
 				writer.write(",");
 
 			}

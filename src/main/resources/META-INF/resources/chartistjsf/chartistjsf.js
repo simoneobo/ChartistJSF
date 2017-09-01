@@ -106,11 +106,16 @@ ChartistJSF.widget.Chart = PrimeFaces.widget.BaseWidget.extend({
 		var chartType = this.type;
 
 		$chart.on('mouseenter', '.ct-point, .ct-bar, .ct-slice-pie, .ct-slice-donut', function() {
-			var $point = $(this), value = $point.attr('ct:value'), seriesName = $point.parent().attr('ct:series-name');
+			var $point = $(this), value = $point.attr('ct:value'), meta = $point.attr('ct:meta'), seriesName = $point.parent().attr('ct:series-name');
 			var tooltipText = value;
 			if (chartType !== 'Pie') {
 				tooltipText = seriesName + '<br>' + value;
 			}
+			
+			if (chartType === 'Pie') {
+				tooltipText = meta + ' ' + value;
+			}
+			
 			$toolTip.html(tooltipText).show();
 		});
 

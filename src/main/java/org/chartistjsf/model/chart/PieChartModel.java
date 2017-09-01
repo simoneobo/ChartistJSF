@@ -28,7 +28,7 @@ public class PieChartModel extends ChartModel {
 	 * 
 	 */
 	private static final long serialVersionUID = -2091395699404032744L;
-	private List<Number> data = new ArrayList<Number>();
+	private List<ChartSeriesData> data = new ArrayList<ChartSeriesData>();
 	private int startAngle = 0;
 	private int total = 0;
 	private boolean donut = false;
@@ -41,15 +41,22 @@ public class PieChartModel extends ChartModel {
 	public PieChartModel() {
 
 	}
+	
+	public void set(Number value) {
+	    	this.set(null, value);
+	}
 
-	public void set(Number number) {
-		this.data.add(number);
+	public void set(String meta, Number value) {
+	    	ChartSeriesData seriesData = new ChartSeriesData();
+	    	seriesData.setMeta(meta);
+	    	seriesData.setValue(value);
+		this.data.add(seriesData);
 	}
 
 	/**
 	 * @return the data
 	 */
-	public List<Number> getData() {
+	public List<ChartSeriesData> getData() {
 		return data;
 	}
 
@@ -57,7 +64,7 @@ public class PieChartModel extends ChartModel {
 	 * @param data
 	 *            the data to set
 	 */
-	public void setData(List<Number> data) {
+	public void setData(List<ChartSeriesData> data) {
 		this.data = data;
 	}
 
